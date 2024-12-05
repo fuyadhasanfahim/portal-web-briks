@@ -1,12 +1,17 @@
+import Header from '@/components/shared/Header';
 import AppSidebar from '@/components/shared/Sidebar';
-import { SidebarProvider } from '@/components/ui/sidebar';
 import { ReactNode } from 'react';
 
 export default async function Layout({ children }: { children: ReactNode }) {
     return (
-        <SidebarProvider defaultOpen={true}>
+        <div className="flex min-h-screen">
             <AppSidebar />
-            <div className="bg-gray-200 w-full p-4">{children}</div>
-        </SidebarProvider>
+
+            <div className="flex flex-col flex-1">
+                <Header />
+
+                <main className="flex-1 bg-[#fff9f2] p-4">{children}</main>
+            </div>
+        </div>
     );
 }

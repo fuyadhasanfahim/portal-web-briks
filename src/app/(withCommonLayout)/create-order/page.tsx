@@ -8,5 +8,7 @@ export default async function CreateOrder() {
 
     if (!user) redirect('/signin');
 
-    return <CreateOrderMain username={user?.username} />;
+    const { userId, username, email, name } = user;
+
+    return <CreateOrderMain user={{ userId, username, email, name }} />;
 }

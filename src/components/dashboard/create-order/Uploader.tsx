@@ -12,13 +12,18 @@ export default function Uploader({
     username,
     files,
     setValue,
+    isUploading,
+    setIsUploading,
+    isOrderPlaced,
 }: {
     username: string;
     files: File[];
     setValue: Dispatch<SetStateAction<File[]>>;
+    isUploading: boolean;
+    setIsUploading: (value: boolean) => void;
+    isOrderPlaced: boolean;
 }) {
     const [previewImages, setPreviewImages] = useState<string[]>([]);
-    const [isUploading, setIsUploading] = useState(false);
 
     const timestamp = format(new Date(), 'dd-MM-yyyy');
     const randomCode = generateRandomCode();
@@ -33,7 +38,7 @@ export default function Uploader({
             data.append('folder', folder);
 
             try {
-                const response = await axios.post('/api/uploads', data);
+                const response = await axios.post('/api/orders/uploads', data);
                 setValue((prevFiles) => [...prevFiles, response.data]);
             } catch (error) {
                 console.error('Error uploading file:', error);
@@ -110,7 +115,7 @@ export default function Uploader({
                 </div>
             )}
 
-            {!isUploading && previewImages.length > 0 && (
+            {!isUploading && isOrderPlaced && previewImages.length > 0 && (
                 <div className="grid grid-cols-3 gap-4 border-2 p-4 rounded-md">
                     {previewImages.map((previewUrl, index) => (
                         <div key={index} className="w-auto h-20 relative">

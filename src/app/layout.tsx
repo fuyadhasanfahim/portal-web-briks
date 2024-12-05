@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
 import { ReactNode } from 'react';
+import { Toaster } from 'react-hot-toast';
+import { ThemeProvider } from '@/components/theme-provider';
 
 const poppins = Poppins({
     weight: ['400', '900'],
@@ -29,7 +31,15 @@ export default async function RootLayout({
                 />
             </head>
             <body className={`${poppins.className} antialiased`}>
-                {children}
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    {children}
+                    <Toaster position="bottom-right" reverseOrder={false} />
+                </ThemeProvider>
             </body>
         </html>
     );
