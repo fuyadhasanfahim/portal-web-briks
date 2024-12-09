@@ -1,7 +1,7 @@
 import { ArrowUpDown, ChevronDown } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { IOrder } from '@/types/Order';
-import DateRangePicker from '../dashboard/home/DateRangePicker';
+import DateRangePicker from '../shared/DateRangePicker';
 
 export default async function SortOrderList() {
     const response = await fetch(

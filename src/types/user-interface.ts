@@ -7,7 +7,6 @@ interface IUser {
     phoneNumber: string;
     company: string;
     country: string;
-    password: string;
     role: string;
     createdAt: string;
     updatedAt: string;

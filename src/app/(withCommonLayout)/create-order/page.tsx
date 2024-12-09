@@ -1,14 +1,16 @@
-import CreateOrderMain from '@/components/dashboard/create-order/Main';
+import CreateOrderForm from '@/components/create-order/CreateOrderForm';
 import { getSession } from '@/lib/getSession';
 import { redirect } from 'next/navigation';
 
-export default async function CreateOrder() {
+export default async function page() {
     const session = await getSession();
     const user = session?.user;
 
     if (!user) redirect('/signin');
 
-    const { userId, username, email, name } = user;
-
-    return <CreateOrderMain user={{ userId, username, email, name }} />;
+    return (
+        <div>
+            <CreateOrderForm user={user} />
+        </div>
+    );
 }

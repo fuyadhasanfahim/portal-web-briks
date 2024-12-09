@@ -1,5 +1,5 @@
 import { ArrowUpDown } from 'lucide-react';
-import DateRangePicker from './DateRangePicker';
+import DateRangePicker from '../../shared/DateRangePicker';
 import toast from 'react-hot-toast';
 import { IOrder } from '@/types/Order';
 
