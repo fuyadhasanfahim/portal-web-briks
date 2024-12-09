@@ -3,7 +3,7 @@ import OrderStatisticsChart from './order-charts/OrderStatisticsChart';
 
 export default function OrderStatistics() {
     return (
-        <div className="w-[640px] h-[330px] bg-white rounded-lg border border-neutral-100">
+        <div className="w-full min-w-[640px] h-[330px] bg-white rounded-lg border border-neutral-100">
             <div className="p-6 inline-flex flex-wrap items-center w-full justify-between gap-10">
                 <div className="text-black text-xl font-medium">
                     Order statistics

@@ -67,6 +67,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.lockUntil = user.lockUntil;
                 token.createdAt = user.createdAt;
                 token.updatedAt = user.updatedAt;
+                token.profileImage = user.profileImage;
             }
             return token;
         },
@@ -94,6 +95,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     lockUntil: token.lockUntil as string,
                     createdAt: token.createdAt as string,
                     updatedAt: token.updatedAt as string,
+                    profileImage: token.profileImage as string,
                 };
             }
             return session;

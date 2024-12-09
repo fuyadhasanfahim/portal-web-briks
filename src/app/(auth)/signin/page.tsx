@@ -25,8 +25,8 @@ export default async function Signin() {
             <Image
                 src={Logo}
                 alt="company logo"
-                height={100}
-                className="h-10 w-auto mx-auto"
+                height={40}
+                className="mx-auto"
             />
             <Card className="w-[400px]">
                 <CardHeader>

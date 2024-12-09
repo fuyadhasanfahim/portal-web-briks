@@ -2,9 +2,9 @@ import { IOrder } from '@/models/order/order.interface';
 import { TrendingUp } from 'lucide-react';
 import Image from 'next/image';
 
-export default function OrderCompletedStats({ orders }: { orders: IOrder[] }) {
-    const completedOrders = orders.filter(
-        (order) => order.status.toLowerCase() === 'completed',
+export default function ActiveOrderStats({ orders }: { orders: IOrder[] }) {
+    const inprogress = orders.filter(
+        (order) => order.status.toLowerCase() === 'in-progress',
     );
 
     return (
@@ -22,22 +22,22 @@ export default function OrderCompletedStats({ orders }: { orders: IOrder[] }) {
                     </div>
                     <div>
                         <h3 className="h-[22px] text-black text-xl font-semibold']">
-                            {completedOrders?.length}
+                            {inprogress?.length}
                         </h3>
                         <p className="text-[#424242] text-base font-normal">
-                            Completed Order
+                            Active Order
                         </p>
                     </div>
                 </div>
                 <div className="w-full h-[0px] border border-[#ececec]" />
                 <div className="flex items-center justify-between w-full">
                     <p className="text-[#424242] text-xs font-normal">
-                        Total Completed Order order
+                        This months Active order
                     </p>
-                    <div className="h-5 p-1 bg-[#f9f0e3] rounded-2xl border justify-start items-center gap-2 inline-flex">
+                    <div className="h-5 p-1 bg-[#d7ffdc] rounded-2xl border justify-start items-center gap-2 inline-flex">
                         <div className="justify-start items-center gap-1 flex">
-                            <TrendingUp className="w-[10px] h-2 text-[#ffa726]" />
-                            <div className="text-[#ffa726] text-[8px] font-normal">
+                            <TrendingUp className="w-[10px] h-2 text-[#00d018]" />
+                            <div className="text-[#00d018] text-[8px] font-normal">
                                 14%
                             </div>
                         </div>

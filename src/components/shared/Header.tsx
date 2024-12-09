@@ -1,8 +1,15 @@
 import { Bell, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import OnSearchButton from './OnSearchButton';
+import { getSession } from '@/lib/getSession';
+import { redirect } from 'next/navigation';
 
-export default function Header() {
+export default async function Header() {
+    const session = await getSession();
+    const user = session?.user;
+
+    if (!user) redirect('/signin');
+
     return (
         <div className="w-full h-20 bg-white px-6">
             <div className="h-full flex items-center justify-end">
@@ -20,10 +27,11 @@ export default function Header() {
 
                     <div className="flex items-center gap-2">
                         <Image
-                            src="/icons/Ellipse.png"
+                            src={user?.profileImage || '/icons/Ellipse.png'}
                             alt="User Avatar"
                             width={50}
                             height={50}
+                            className="rounded-full"
                         />
                         <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
                             <ChevronDown className="w-4 h-4 text-gray-600" />

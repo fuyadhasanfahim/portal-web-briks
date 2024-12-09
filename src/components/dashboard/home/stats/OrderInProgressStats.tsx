@@ -8,9 +8,9 @@ export default function OrderInProgressStats({ orders }: { orders: IOrder[] }) {
     );
 
     return (
-        <div className="w-[264px] h-[139px] bg-white rounded-lg border border-neutral-100 shadow-sm">
-            <div className="flex flex-col items-center justify-center gap-2 h-full">
-                <div className="inline-flex items-center justify-start gap-3 w-full ml-10">
+        <div className="w-full min-w-[264px] h-[139px] bg-white rounded-lg border border-neutral-100 shadow-sm">
+            <div className="flex flex-col items-start justify-center gap-2 h-full px-6">
+                <div className="inline-flex items-center justify-start gap-3 w-full">
                     <div className="size-12 bg-black rounded-lg justify-center items-center inline-flex">
                         <Image
                             src={'/icons/inprogress-icon.svg'}
@@ -29,8 +29,8 @@ export default function OrderInProgressStats({ orders }: { orders: IOrder[] }) {
                         </p>
                     </div>
                 </div>
-                <div className="w-[230px] h-[0px] border border-[#ececec]" />
-                <div className="flex items-center justify-between w-full px-5">
+                <div className="w-full h-[0px] border border-[#ececec]" />
+                <div className="flex items-center justify-between w-full">
                     <p className="text-[#424242] text-xs font-normal">
                         This months Running order
                     </p>

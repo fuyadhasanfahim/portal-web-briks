@@ -17,6 +17,7 @@ export interface IOrder {
     paymentMethod: string;
     estimatedTotalPrice: number;
     status: string;
+    completedDate: string;
 }
 
 export interface IFile {

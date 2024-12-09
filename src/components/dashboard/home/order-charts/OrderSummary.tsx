@@ -57,7 +57,7 @@ const renderCustomizedLabel = ({
 
 export default function OrderSummary() {
     return (
-        <div className="w-[264px] h-[330px] bg-white rounded-lg border border-neutral-100">
+        <div className="w-full max-w-[264px] h-[330px] bg-white rounded-lg border border-neutral-100">
             <h3 className="text-black text-xl font-medium px-4 py-6">
                 Order Summary
             </h3>

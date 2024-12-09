@@ -29,7 +29,7 @@ export default function DateRangePicker({
                         id="date"
                         variant={'outline'}
                         className={cn(
-                            'px-6 py-3 rounded-lg border border-[#cccccc] justify-start items-center gap-2 inline-flex bg-transparent',
+                            'h-[45px] px-4 py-3 rounded-lg border bg-transparent border-[#cccccc] justify-center items-center gap-2 inline-flex',
                             !date && 'text-muted-foreground',
                         )}
                     >

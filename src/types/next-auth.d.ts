@@ -24,6 +24,7 @@ declare module 'next-auth' {
             lockUntil: string;
             createdAt: string;
             updatedAt: string;
+            profileImage: string;
         } & DefaultSession['user'];
     }
 
@@ -47,6 +48,7 @@ declare module 'next-auth' {
         lockUntil: string;
         createdAt: string;
         updatedAt: string;
+        profileImage: string;
     }
 
     interface JWT {
@@ -68,5 +70,6 @@ declare module 'next-auth' {
         lockUntil: string;
         createdAt: string;
         updatedAt: string;
+        profileImage: string;
     }
 }

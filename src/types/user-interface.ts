@@ -20,6 +20,7 @@ interface IUser {
     failedLoginAttempts: number;
     lastFailedLoginAttempt: Date | null;
     lastLogin: Date;
+    profileImage: string;
 }
 
 export default IUser;

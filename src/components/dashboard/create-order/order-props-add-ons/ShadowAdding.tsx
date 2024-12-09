@@ -161,9 +161,9 @@ export default function ShadowAdding({
                                                         key={data.value}
                                                         src={data.image}
                                                         alt={data.value}
-                                                        width={400}
-                                                        height={300}
-                                                        className="rounded-xl w-64 h-44 border shadow-md"
+                                                        width={256}
+                                                        height={176}
+                                                        className="rounded-xl border shadow-md"
                                                     />
                                                 );
                                             }

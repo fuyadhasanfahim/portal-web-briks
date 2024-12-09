@@ -55,7 +55,7 @@ export default async function Page() {
                     <OrderStatistics />
                     <OrderSummary />
 
-                    <div className="w-[267px] h-[330px] bg-white rounded-lg border border-neutral-100">
+                    <div className="w-full max-w-[267px] h-[330px] bg-white rounded-lg border border-neutral-100">
                         <p className="text-black text-xl font-medium px-4 py-6">
                             Need helps?
                         </p>

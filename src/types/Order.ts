@@ -1,4 +1,5 @@
 export interface IOrder {
+    createdAt: string | number | Date;
     userId: string;
     name: string;
     username: string;
@@ -16,6 +17,8 @@ export interface IOrder {
     paymentStatus: string;
     paymentMethod: string;
     estimatedTotalPrice: number;
+    status: string;
+    completedDate: string;
 }
 
 export interface IFile {

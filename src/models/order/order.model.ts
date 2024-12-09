@@ -71,6 +71,10 @@ const orderSchema = new Schema<IOrder>(
             ],
             default: 'pending',
         },
+        completedDate: {
+            type: String,
+            required: false,
+        },
     },
     {
         timestamps: true,
