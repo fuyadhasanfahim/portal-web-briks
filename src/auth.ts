@@ -48,54 +48,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token._id = user._id;
                 token.userId = user.userId;
-                token.name = user.name;
-                token.username = user.username;
                 token.email = user.email;
-                token.phoneNumber = user.phoneNumber;
-                token.company = user.company;
-                token.country = user.country;
                 token.role = user.role;
-                token.isActive = user.isActive;
                 token.isVerified = user.isVerified;
-                token.emailVerificationToken = user.emailVerificationToken;
-                token.emailVerificationExpires = user.emailVerificationExpires;
-                token.passwordResetToken = user.passwordResetToken;
-                token.passwordResetExpires = user.passwordResetExpires;
-                token.failedLoginAttempts = user.failedLoginAttempts;
-                token.lockUntil = user.lockUntil;
-                token.createdAt = user.createdAt;
-                token.updatedAt = user.updatedAt;
-                token.profileImage = user.profileImage;
             }
             return token;
         },
         async session({ session, token }) {
-            if (token?.sub && token?.role) {
+            if (token?.sub) {
                 session.user = {
-                    _id: token._id as string,
+                    id: token.sub,
                     userId: token.userId as string,
-                    name: token.name as string,
-                    username: token.username as string,
                     email: token.email as string,
-                    phoneNumber: token.phoneNumber as string,
-                    company: token.company as string,
-                    country: token.country as string,
                     role: token.role as string,
-                    isActive: token.isActive as string,
-                    isVerified: token.isVerified as string,
-                    emailVerificationToken:
-                        token.emailVerificationToken as string,
-                    emailVerificationExpires:
-                        token.emailVerificationExpires as string,
-                    passwordResetToken: token.passwordResetToken as string,
-                    passwordResetExpires: token.passwordResetExpires as string,
-                    failedLoginAttempts: token.failedLoginAttempts as string,
-                    lockUntil: token.lockUntil as string,
-                    createdAt: token.createdAt as string,
-                    updatedAt: token.updatedAt as string,
-                    profileImage: token.profileImage as string,
+                    isVerified: token.isVerified as Date,
+                    emailVerified: null,
                 };
             }
             return session;

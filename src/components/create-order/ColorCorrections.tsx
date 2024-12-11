@@ -52,13 +52,15 @@ export default function ColorCorrections({ setAddOns }: ColorCorrectionsProps) {
     const [isActive, setIsActive] = useState<boolean>(false);
 
     useEffect(() => {
-        if (isActive) {
-            const addOn = {
+        const selectedOption = ColorCorrectionsData.find(
+            (item) => item.value === selected,
+        );
+
+        if (isActive && selectedOption) {
+            const addOn: AddOn = {
                 service: 'fix-imperfection',
-                sub: selected,
-                price:
-                    ColorCorrectionsData.find((item) => item.value === selected)
-                        ?.price || 0,
+                sub: selectedOption.value,
+                price: selectedOption.price,
             };
             setAddOns((prev) => [
                 ...prev.filter((item) => item.service !== 'fix-imperfection'),
@@ -71,9 +73,14 @@ export default function ColorCorrections({ setAddOns }: ColorCorrectionsProps) {
         }
     }, [isActive, selected, setAddOns]);
 
+    const activeOption = ColorCorrectionsData.find(
+        (item) => item.value === selected,
+    );
+
     return (
         <div className="rounded-xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 bg-black">
+            {/* Header Section */}
+            <div className="flex items-center justify-between px-6 py-4 bg-gray-900">
                 <Label htmlFor="fix-imperfection" className="cursor-pointer">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-white/10 rounded-lg">
@@ -97,8 +104,10 @@ export default function ColorCorrections({ setAddOns }: ColorCorrectionsProps) {
                 />
             </div>
 
+            {/* Active State Section */}
             {isActive && (
                 <div className="p-6 space-y-6">
+                    {/* Description */}
                     <div className="text-center space-y-2">
                         <h3 className="text-lg font-medium text-gray-900">
                             Select Your Preferred Shadow Option
@@ -109,11 +118,13 @@ export default function ColorCorrections({ setAddOns }: ColorCorrectionsProps) {
                         </p>
                     </div>
 
+                    {/* Options and Preview */}
                     <RadioGroup
                         value={selected}
                         onValueChange={setSelected}
                         className="grid md:grid-cols-2 gap-6"
                     >
+                        {/* Options */}
                         <div className="space-y-4">
                             {ColorCorrectionsData.map((option) => (
                                 <div
@@ -151,22 +162,18 @@ export default function ColorCorrections({ setAddOns }: ColorCorrectionsProps) {
                             ))}
                         </div>
 
+                        {/* Preview */}
                         <div className="flex items-center justify-center">
-                            {ColorCorrectionsData.map((ColorCorrectionsdata) =>
-                                ColorCorrectionsdata.value === selected ? (
-                                    <div
-                                        key={ColorCorrectionsdata.value}
-                                        className="relative group"
-                                    >
-                                        <Image
-                                            src={ColorCorrectionsdata.image}
-                                            alt={ColorCorrectionsdata.label}
-                                            width={300}
-                                            height={220}
-                                            className="rounded-lg shadow-lg object-cover transition-transform duration-300 group-hover:scale-105"
-                                        />
-                                    </div>
-                                ) : null,
+                            {activeOption && (
+                                <div className="relative group">
+                                    <Image
+                                        src={activeOption.image}
+                                        alt={activeOption.label}
+                                        width={300}
+                                        height={220}
+                                        className="rounded-lg shadow-lg object-cover transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                </div>
                             )}
                         </div>
                     </RadioGroup>

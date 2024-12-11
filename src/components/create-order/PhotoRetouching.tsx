@@ -52,13 +52,14 @@ export default function PhotoRetouching({ setAddOns }: PhotoRetouchingProps) {
     const [isActive, setIsActive] = useState<boolean>(false);
 
     useEffect(() => {
-        if (isActive) {
+        const selectedOption = PhotoRetoData.find(
+            (item) => item.value === selected,
+        );
+        if (isActive && selectedOption) {
             const addOn = {
                 service: 'fix-imperfection',
                 sub: selected,
-                price:
-                    PhotoRetoData.find((item) => item.value === selected)
-                        ?.price || 0,
+                price: selectedOption.price,
             };
             setAddOns((prev) => [
                 ...prev.filter((item) => item.service !== 'fix-imperfection'),
@@ -71,9 +72,14 @@ export default function PhotoRetouching({ setAddOns }: PhotoRetouchingProps) {
         }
     }, [isActive, selected, setAddOns]);
 
+    const selectedOption = PhotoRetoData.find(
+        (item) => item.value === selected,
+    );
+
     return (
         <div className="rounded-xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 bg-black">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 bg-gray-900">
                 <Label htmlFor="fix-imperfection" className="cursor-pointer">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-white/10 rounded-lg">
@@ -97,8 +103,10 @@ export default function PhotoRetouching({ setAddOns }: PhotoRetouchingProps) {
                 />
             </div>
 
+            {/* Content */}
             {isActive && (
                 <div className="p-6 space-y-6">
+                    {/* Header Text */}
                     <div className="text-center space-y-2">
                         <h3 className="text-lg font-medium text-gray-900">
                             Select Your Preferred Shadow Option
@@ -109,6 +117,7 @@ export default function PhotoRetouching({ setAddOns }: PhotoRetouchingProps) {
                         </p>
                     </div>
 
+                    {/* Radio Group */}
                     <RadioGroup
                         value={selected}
                         onValueChange={setSelected}
@@ -151,24 +160,20 @@ export default function PhotoRetouching({ setAddOns }: PhotoRetouchingProps) {
                             ))}
                         </div>
 
-                        <div className="flex items-center justify-center">
-                            {PhotoRetoData.map((data) =>
-                                data.value === selected ? (
-                                    <div
-                                        key={data.value}
-                                        className="relative group"
-                                    >
-                                        <Image
-                                            src={data.image}
-                                            alt={data.label}
-                                            width={300}
-                                            height={220}
-                                            className="rounded-lg shadow-lg object-cover transition-transform duration-300 group-hover:scale-105"
-                                        />
-                                    </div>
-                                ) : null,
-                            )}
-                        </div>
+                        {/* Image Preview */}
+                        {selectedOption && (
+                            <div className="flex items-center justify-center">
+                                <div className="relative group">
+                                    <Image
+                                        src={selectedOption.image}
+                                        alt={selectedOption.label}
+                                        width={300}
+                                        height={220}
+                                        className="rounded-lg shadow-lg object-cover transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </RadioGroup>
                 </div>
             )}

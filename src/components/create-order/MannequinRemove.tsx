@@ -71,9 +71,13 @@ export default function MannequinRemove({ setAddOns }: MannequinRemoveProps) {
         }
     }, [isActive, selected, setAddOns]);
 
+    const selectedOption = MannequinRemoveData.find(
+        (option) => option.value === selected,
+    );
+
     return (
         <div className="rounded-xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 bg-black">
+            <div className="flex items-center justify-between px-6 py-4 bg-gray-900">
                 <Label htmlFor="fix-imperfection" className="cursor-pointer">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-white/10 rounded-lg">
@@ -151,24 +155,19 @@ export default function MannequinRemove({ setAddOns }: MannequinRemoveProps) {
                             ))}
                         </div>
 
-                        <div className="flex items-center justify-center">
-                            {MannequinRemoveData.map((data) =>
-                                data.value === selected ? (
-                                    <div
-                                        key={data.value}
-                                        className="relative group"
-                                    >
-                                        <Image
-                                            src={data.image}
-                                            alt={data.label}
-                                            width={300}
-                                            height={220}
-                                            className="rounded-lg shadow-lg object-cover transition-transform duration-300 group-hover:scale-105"
-                                        />
-                                    </div>
-                                ) : null,
-                            )}
-                        </div>
+                        {selectedOption && (
+                            <div className="flex items-center justify-center">
+                                <div className="relative group">
+                                    <Image
+                                        src={selectedOption.image}
+                                        alt={selectedOption.label}
+                                        width={300}
+                                        height={220}
+                                        className="rounded-lg shadow-lg object-cover transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </RadioGroup>
                 </div>
             )}

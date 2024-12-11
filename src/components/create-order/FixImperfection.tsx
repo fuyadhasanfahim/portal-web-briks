@@ -52,28 +52,30 @@ export default function FixImperfection({ setAddOns }: FixImperfectionProps) {
     const [isActive, setIsActive] = useState<boolean>(false);
 
     useEffect(() => {
-        if (isActive) {
-            const addOn = {
-                service: 'fix-imperfection',
-                sub: selected,
-                price:
-                    fixImperfectionData.find((item) => item.value === selected)
-                        ?.price || 0,
-            };
-            setAddOns((prev) => [
-                ...prev.filter((item) => item.service !== 'fix-imperfection'),
-                addOn,
-            ]);
-        } else {
-            setAddOns((prev) =>
-                prev.filter((item) => item.service !== 'fix-imperfection'),
+        setAddOns((prev) => {
+            const updatedAddOns = prev.filter(
+                (item) => item.service !== 'fix-imperfection',
             );
-        }
+
+            if (isActive) {
+                const addOn = {
+                    service: 'fix-imperfection',
+                    sub: selected,
+                    price:
+                        fixImperfectionData.find(
+                            (item) => item.value === selected,
+                        )?.price || 0,
+                };
+                return [...updatedAddOns, addOn];
+            }
+
+            return updatedAddOns;
+        });
     }, [isActive, selected, setAddOns]);
 
     return (
         <div className="rounded-xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 bg-black">
+            <div className="flex items-center justify-between px-6 py-4 bg-gray-900">
                 <Label htmlFor="fix-imperfection" className="cursor-pointer">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-white/10 rounded-lg">

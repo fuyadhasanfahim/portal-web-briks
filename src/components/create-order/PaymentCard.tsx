@@ -28,12 +28,12 @@ export default function PaymentCard({
     setPaymentTerms: (value: string) => void;
 }) {
     const estimatedPrice = (
-        parseFloat(pricePerImage) * files?.length || Number(imageLength)
+        Number(pricePerImage) * (files?.length || Number(imageLength))
     ).toFixed(2);
 
     return (
         <div className="w-full max-w-xs h-full">
-            <div className="h-16 bg-black rounded-t-lg flex items-center justify-center">
+            <div className="h-16 bg-gray-900 rounded-t-lg flex items-center justify-center">
                 <h3 className="text-white text-xl font-medium">
                     Service & Payment
                 </h3>

@@ -55,18 +55,22 @@ export default function CroppingRetouching({
 
     useEffect(() => {
         if (isActive) {
-            const addOn = {
-                service: 'fix-imperfection',
-                sub: selected,
-                price:
-                    CroppingRetouchingData.find(
-                        (item) => item.value === selected,
-                    )?.price || 0,
-            };
-            setAddOns((prev) => [
-                ...prev.filter((item) => item.service !== 'fix-imperfection'),
-                addOn,
-            ]);
+            const selectedOption = CroppingRetouchingData.find(
+                (item) => item.value === selected,
+            );
+            if (selectedOption) {
+                const addOn: AddOn = {
+                    service: 'fix-imperfection',
+                    sub: selectedOption.value,
+                    price: selectedOption.price,
+                };
+                setAddOns((prev) => [
+                    ...prev.filter(
+                        (item) => item.service !== 'fix-imperfection',
+                    ),
+                    addOn,
+                ]);
+            }
         } else {
             setAddOns((prev) =>
                 prev.filter((item) => item.service !== 'fix-imperfection'),
@@ -76,7 +80,7 @@ export default function CroppingRetouching({
 
     return (
         <div className="rounded-xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 bg-black">
+            <div className="flex items-center justify-between px-6 py-4 bg-gray-900">
                 <Label htmlFor="fix-imperfection" className="cursor-pointer">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-white/10 rounded-lg">
@@ -155,27 +159,21 @@ export default function CroppingRetouching({
                         </div>
 
                         <div className="flex items-center justify-center">
-                            {CroppingRetouchingData.map(
-                                (CroppingRetouchingdata) =>
-                                    CroppingRetouchingdata.value ===
-                                    selected ? (
-                                        <div
-                                            key={CroppingRetouchingdata.value}
-                                            className="relative group"
-                                        >
-                                            <Image
-                                                src={
-                                                    CroppingRetouchingdata.image
-                                                }
-                                                alt={
-                                                    CroppingRetouchingdata.label
-                                                }
-                                                width={300}
-                                                height={220}
-                                                className="rounded-lg shadow-lg object-cover transition-transform duration-300 group-hover:scale-105"
-                                            />
-                                        </div>
-                                    ) : null,
+                            {CroppingRetouchingData.map((option) =>
+                                option.value === selected ? (
+                                    <div
+                                        key={option.value}
+                                        className="relative group"
+                                    >
+                                        <Image
+                                            src={option.image}
+                                            alt={option.label}
+                                            width={300}
+                                            height={220}
+                                            className="rounded-lg shadow-lg object-cover transition-transform duration-300 group-hover:scale-105"
+                                        />
+                                    </div>
+                                ) : null,
                             )}
                         </div>
                     </RadioGroup>

@@ -7,7 +7,7 @@ export default function HeroSection({ name }: { name: string }) {
         <div className="flex flex-wrap items-center justify-between gap-10 pt-6 pb-10">
             <div>
                 <h3 className="text-black text-xl font-medium">
-                    Good Morning ,{name}!
+                    Good Morning, {name}!
                 </h3>
                 <div className="text-[#424242] text-base font-normal">
                     Hope you have a good day.

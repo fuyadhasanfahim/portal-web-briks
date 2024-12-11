@@ -51,7 +51,7 @@ export default async function SortOrderList() {
             </div>
 
             <div className="w-full shadow-sm rounded-2xl">
-                <div className="w-full h-16 bg-black rounded-tl-2xl rounded-tr-2xl px-6">
+                <div className="w-full h-16 bg-gray-900 rounded-tl-2xl rounded-tr-2xl px-6">
                     <div className="h-full grid grid-cols-5 items-center">
                         <button className="flex items-center gap-2 text-white font-medium">
                             Project Name

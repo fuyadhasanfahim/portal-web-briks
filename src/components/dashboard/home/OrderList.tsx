@@ -1,42 +1,37 @@
 import { ArrowUpDown } from 'lucide-react';
 import DateRangePicker from '../../shared/DateRangePicker';
-import toast from 'react-hot-toast';
 import { IOrder } from '@/types/Order';
+import { getOrders } from '@/utils/orders';
+import { getSession } from '@/lib/getSession';
+import { redirect } from 'next/navigation';
+import getLoggedInUserInfo from '@/utils/users';
 
 export default async function OrderList() {
-    const response = await fetch(
-        'http://localhost:3000/api/orders/get-all-orders',
-        {
-            method: 'GET',
-            credentials: 'include',
-        },
-    );
+    const session = await getSession();
+    const userId = session?.user?.userId;
 
-    if (!response.ok) {
-        toast.error('Failed to fetch orders');
-        return;
-    }
+    if (!userId) redirect('/signin');
 
-    const { success, data, message } = await response.json();
+    const user = await getLoggedInUserInfo(userId);
 
-    if (!success) {
-        toast.error(message);
-        return;
-    }
+    const data = {
+        userId,
+        role: user?.role,
+    };
 
-    const orders = data;
+    const orders = await getOrders(data);
 
     return (
         <div className="space-y-10">
             <div className="flex items-center justify-between gap-10">
                 <h3 className="text-black text-2xl font-medium">Order List</h3>
 
-                <DateRangePicker className="" />
+                <DateRangePicker />
             </div>
 
             <div className="w-full shadow-sm rounded-2xl">
                 {/* Table Header */}
-                <div className="w-full h-16 bg-black rounded-tl-2xl rounded-tr-2xl px-6">
+                <div className="w-full h-16 bg-gray-900 rounded-tl-2xl rounded-tr-2xl px-6">
                     <div className="h-full grid grid-cols-5 items-center">
                         <button className="flex items-center gap-2 text-white font-medium">
                             Project Name

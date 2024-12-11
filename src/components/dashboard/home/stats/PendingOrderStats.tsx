@@ -11,7 +11,7 @@ export default function PendingOrderStats({ orders }: { orders: IOrder[] }) {
         <div className="w-full min-w-[264px] h-[139px] bg-white rounded-lg border border-neutral-100 shadow-sm">
             <div className="flex flex-col items-start justify-center gap-2 h-full px-6">
                 <div className="inline-flex items-center justify-start w-full gap-3">
-                    <div className="size-12 bg-black rounded-lg justify-center items-center inline-flex">
+                    <div className="size-12 bg-gray-900 rounded-lg justify-center items-center inline-flex">
                         <Image
                             src={'/icons/order-completed.svg'}
                             alt="order completed icon"

@@ -43,7 +43,9 @@ function UploadUI({
                         </span>
                     </div>
                 ) : (
-                    <div className="text-center">{value?.length || 0}</div>
+                    <div className="text-center">
+                        Selected {value?.length || 0} images
+                    </div>
                 )}
             </div>
         </div>

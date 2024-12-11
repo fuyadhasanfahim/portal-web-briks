@@ -52,28 +52,27 @@ export default function ShadowAdding({ setAddOns }: ShadowAddingProps) {
     const [isActive, setIsActive] = useState<boolean>(false);
 
     useEffect(() => {
-        if (isActive) {
-            const addOn = {
-                service: 'shadow-adding',
-                sub: selected,
-                price:
-                    shadowAddingData.find((item) => item.value === selected)
-                        ?.price || 0,
-            };
-            setAddOns((prev) => [
-                ...prev.filter((item) => item.service !== 'shadow-adding'),
-                addOn,
-            ]);
-        } else {
-            setAddOns((prev) =>
-                prev.filter((item) => item.service !== 'shadow-adding'),
+        setAddOns((prev) => {
+            const updatedAddOns = prev.filter(
+                (item) => item.service !== 'shadow-adding',
             );
-        }
-    }, [isActive, selected, setAddOns]);
+            if (isActive) {
+                const addOn = {
+                    service: 'shadow-adding',
+                    sub: selected,
+                    price:
+                        shadowAddingData.find((item) => item.value === selected)
+                            ?.price || 0,
+                };
+                return [...updatedAddOns, addOn];
+            }
+            return updatedAddOns;
+        });
+    }, [isActive, selected]);
 
     return (
         <div className="rounded-xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 bg-black">
+            <div className="flex items-center justify-between px-6 py-4 bg-gray-900">
                 <Label htmlFor="shadow-adding" className="cursor-pointer">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-white/10 rounded-lg">

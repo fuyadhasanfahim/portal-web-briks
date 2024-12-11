@@ -7,37 +7,25 @@ import OrderInProgressStats from '@/components/dashboard/home/stats/OrderInProgr
 import TotalOrdersStats from '@/components/dashboard/home/stats/TotalOrdersStats';
 import TotalSpentStats from '@/components/dashboard/home/stats/TotalSpentStats';
 import { getSession } from '@/lib/getSession';
+import { getOrders } from '@/utils/orders';
+import getLoggedInUserInfo from '@/utils/users';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
-import toast from 'react-hot-toast';
 
 export default async function Page() {
     const session = await getSession();
-    const user = session?.user;
+    const userId = session?.user?.userId;
 
-    if (!user) redirect('/signin');
+    if (!userId) redirect('/signin');
 
-    const response = await fetch(
-        'http://localhost:3000/api/orders/get-all-orders',
-        {
-            method: 'GET',
-            credentials: 'include',
-        },
-    );
+    const user = await getLoggedInUserInfo(userId);
 
-    if (!response.ok) {
-        toast.error('Failed to fetch orders');
-        return;
-    }
+    const data = {
+        userId,
+        role: user?.role,
+    };
 
-    const { success, data, message } = await response.json();
-
-    if (!success) {
-        toast.error(message);
-        return;
-    }
-
-    const orders = data;
+    const orders = await getOrders(data);
 
     return (
         <div className="">
@@ -69,7 +57,7 @@ export default async function Page() {
                             />
                         </div>
 
-                        <div className="h-[37px] px-4 py-2 bg-black rounded-lg justify-center items-center gap-2 inline-flex mx-4 my-6">
+                        <div className="h-[37px] px-4 py-2 bg-gray-900 rounded-lg justify-center items-center gap-2 inline-flex mx-4 my-6">
                             <div className="text-white text-sm font-normal">
                                 <span>Contact us</span>
                             </div>

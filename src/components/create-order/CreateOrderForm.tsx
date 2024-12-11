@@ -38,54 +38,76 @@ export default function CreateOrderForm({ user }: { user: IUser }) {
     const [metadata, setMetadata] = useState<string>(
         'Keep My Metadata intact- What’s This?',
     );
-    const [flatness, setFlatness] = useState<string>('');
+    const [flatness, setFlatness] = useState<string>('0.5');
     const [outputFormat, setOutputFormat] = useState<string>('png');
     const [backgroundOption, setBackgroundOption] = useState<string>('white');
     const [description, setDescription] = useState<string>('');
     const [files, setFiles] = useState<File[]>([]);
     const [addOns, setAddOns] = useState<AddOn[]>([]);
-    const [deliveryTime, setDeliveryTime] = useState<string>('');
+    const [deliveryTime, setDeliveryTime] = useState<string>('12-hours');
     const [paymentTerms, setPaymentTerms] = useState<string>('pay-now');
+
+    // const handleSetAddOns = (addon: AddOn) => {
+    //     setAddOns((prevAddOns) => [...prevAddOns, addon]);
+    // };
+
+    const estimatedPrice = (
+        Number(pricePerImage) * (files?.length || Number(imageLength))
+    ).toFixed(2);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!title || !description || files.length === 0) {
+        if (!title || !description) {
             toast.error('Please fill in all required fields');
             return;
         }
 
-        try {
-            const orderData = {
-                userId: user?.userId,
-                name: user?.name,
-                username: user?.username,
-                email: user?.email,
-                title,
-                dueDate,
-                pricePerImage,
-                metadata,
-                flatness,
-                outputFormat,
-                backgroundOption,
-                description,
-                files,
-                addOns,
-                deliveryTime,
-                paymentTerms,
-            };
+        const orderData = {
+            userId: user?.userId,
+            name: user?.name,
+            username: user?.username,
+            email: user?.email,
+            title,
+            dueDate,
+            pricePerImage,
+            metadata,
+            flatness,
+            outputFormat,
+            backgroundOption,
+            description,
+            files,
+            addOns,
+            deliveryTime,
+            paymentTerms,
+            estimatedTotal: estimatedPrice,
+        };
 
-            console.log(orderData);
-        } catch (error) {
-            console.error('Error submitting order:', error);
-            toast.error('Failed to submit order');
-        }
+        toast.promise(
+            fetch('/api/orders/create-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to create order');
+                }
+                return response.json();
+            }),
+            {
+                loading: 'Submitting your order...',
+                success: 'Order submitted successfully!',
+                error: 'Failed to submit order. Please try again.',
+            },
+        );
     };
 
     return (
         <form onSubmit={handleSubmit} className="flex gap-5">
             <div className="h-full w-full min-h-screen">
-                <div className="w-full h-16 bg-black rounded-t-lg flex items-center">
+                <div className="w-full h-16 bg-gray-900 rounded-t-lg flex items-center">
                     <h3 className="text-white text-xl font-medium px-6">
                         Service Order Form
                     </h3>
@@ -404,11 +426,13 @@ export default function CreateOrderForm({ user }: { user: IUser }) {
                         />
                     </div>
 
-                    <Uploader
-                        username={user?.username || ''}
-                        value={files}
-                        setValue={setFiles}
-                    />
+                    {!downloadLink && (
+                        <Uploader
+                            username={user?.username || ''}
+                            value={files}
+                            setValue={setFiles}
+                        />
+                    )}
 
                     <div>
                         <ShadowAdding key="shadow" setAddOns={setAddOns} />
