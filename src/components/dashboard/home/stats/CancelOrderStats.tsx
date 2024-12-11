@@ -3,7 +3,7 @@ import { TrendingUp } from 'lucide-react';
 import Image from 'next/image';
 
 export default function CancelOrderStats({ orders }: { orders: IOrder[] }) {
-    const cancel = orders.filter(
+    const cancel = orders?.filter(
         (order) => order.status.toLowerCase() === 'cancel',
     );
 

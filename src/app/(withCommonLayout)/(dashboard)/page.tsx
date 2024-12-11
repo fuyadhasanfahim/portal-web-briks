@@ -40,8 +40,8 @@ export default async function Page() {
 
             <div className="py-10">
                 <div className="flex items-center gap-5">
-                    <OrderStatistics />
-                    <OrderSummary />
+                    <OrderStatistics orders={orders} />
+                    <OrderSummary orders={orders} />
 
                     <div className="w-full max-w-[267px] h-[330px] bg-white rounded-lg border border-neutral-100">
                         <p className="text-black text-xl font-medium px-4 py-6">

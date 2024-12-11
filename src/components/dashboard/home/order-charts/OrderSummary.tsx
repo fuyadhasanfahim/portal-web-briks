@@ -1,22 +1,14 @@
 'use client';
 
+import { IOrder } from '@/types/Order';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
-// Define order status types and colors
 const ORDER_STATUS = {
-    completed: { name: 'Completed', color: '#ffa726' },
-    active: { name: 'Active', color: '#2dc23e' },
-    revision: { name: 'Revision', color: '#6c3ccc' },
-    cancelled: { name: 'Cancelled', color: '#e24143' },
+    pending: { name: 'pending', color: '#ffa726' },
+    completed: { name: 'completed', color: '#2dc23e' },
+    inprogress: { name: 'inprogress', color: '#6c3ccc' },
+    canceled: { name: 'canceled', color: '#e24143' },
 };
-
-// Sample data - replace with your actual data
-const data = [
-    { name: 'Completed', value: 400 },
-    { name: 'Active', value: 300 },
-    { name: 'Revision', value: 200 },
-    { name: 'Cancelled', value: 100 },
-];
 
 const RADIAN = Math.PI / 180;
 
@@ -55,7 +47,34 @@ const renderCustomizedLabel = ({
     );
 };
 
-export default function OrderSummary() {
+export default function OrderSummary({ orders }: { orders: IOrder[] }) {
+    const validOrders = Array.isArray(orders) ? orders : [];
+
+    // Calculate status counts with normalization
+    const statusCounts = validOrders.reduce((acc, order) => {
+        const normalizedStatus = order.status.toLowerCase();
+        acc[normalizedStatus] = (acc[normalizedStatus] || 0) + 1;
+        return acc;
+    }, {} as Record<string, number>);
+
+    // Prepare data for PieChart
+    const data = Object.entries(ORDER_STATUS).map(([key, { name }]) => ({
+        name,
+        value: statusCounts[key] || 0,
+    }));
+
+    console.log('Orders:', orders);
+    console.log('Chart Data:', data);
+
+    // Fallback for no data
+    if (data.every((entry) => entry.value === 0)) {
+        return (
+            <div className="w-full max-w-[264px] h-[330px] bg-white rounded-lg border border-neutral-100 flex items-center justify-center">
+                <p className="text-gray-500">No orders to display.</p>
+            </div>
+        );
+    }
+
     return (
         <div className="w-full max-w-[264px] h-[330px] bg-white rounded-lg border border-neutral-100">
             <h3 className="text-black text-xl font-medium px-4 py-6">

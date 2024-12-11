@@ -1,24 +1,23 @@
 export interface IOrder {
-    createdAt: string | number | Date;
     userId: string;
     name: string;
     username: string;
     email: string;
     orderId: string;
-    files: IFile[];
+    files?: IFile[];
     title: string;
-    metadata: string[];
-    flatness: string;
-    outputFormats: string[];
+    dueDate: { from: Date; to: Date };
+    pricePerImage: number;
+    metadata?: string;
+    flatness?: string;
+    outputFormat: string;
     backgroundOption: string;
-    instructions: string;
-    addOns: IAddOn[];
-    deliveryTime: string;
-    paymentStatus: string;
-    paymentMethod: string;
-    estimatedTotalPrice: number;
+    description?: string;
+    addOns?: IAddOn[];
+    deliveryTime: '12-hours' | '24-hours' | '48-hours';
+    paymentTerms: 'pay-now' | 'pay-later';
     status: string;
-    completedDate: string;
+    estimatedTotal: string;
 }
 
 export interface IFile {

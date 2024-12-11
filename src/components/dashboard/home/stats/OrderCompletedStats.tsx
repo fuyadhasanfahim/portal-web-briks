@@ -3,7 +3,7 @@ import { TrendingUp } from 'lucide-react';
 import Image from 'next/image';
 
 export default function OrderCompletedStats({ orders }: { orders: IOrder[] }) {
-    const completedOrders = orders.filter(
+    const completedOrders = orders?.filter(
         (order) => order.status.toLowerCase() === 'completed',
     );
 

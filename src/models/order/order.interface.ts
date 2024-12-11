@@ -18,6 +18,7 @@ export interface IOrder {
     paymentTerms: 'pay-now' | 'pay-later';
     status: string;
     estimatedTotal: string;
+    paymentStatus: string;
 }
 
 export interface IFile {

@@ -40,49 +40,56 @@ const fileSchema = new Schema<IFile>(
     },
 );
 
-const orderSchema = new Schema<IOrder>({
-    userId: { type: String, ref: 'user', required: true },
-    name: { type: String, ref: 'user', required: true },
-    username: { type: String, ref: 'user', required: true },
-    email: { type: String, ref: 'user', required: true },
-    orderId: { type: String, required: true },
-    files: { type: [fileSchema], required: false },
-    title: { type: String, required: true },
-    dueDate: {
-        from: { type: Date, required: true },
-        to: { type: Date, required: true },
+const orderSchema = new Schema<IOrder>(
+    {
+        userId: { type: String, ref: 'user', required: true },
+        name: { type: String, ref: 'user', required: true },
+        username: { type: String, ref: 'user', required: true },
+        email: { type: String, ref: 'user', required: true },
+        orderId: { type: String, required: true },
+        files: { type: [fileSchema], required: false },
+        title: { type: String, required: true },
+        dueDate: {
+            from: { type: Date, required: true },
+            to: { type: Date, required: true },
+        },
+        pricePerImage: { type: Number, required: true },
+        metadata: { type: String },
+        flatness: { type: String },
+        outputFormat: { type: String, required: true },
+        backgroundOption: { type: String, required: true },
+        description: { type: String },
+        addOns: { type: [addOnSchema] },
+        deliveryTime: {
+            type: String,
+            enum: ['12-hours', '24-hours', '48-hours'],
+            required: true,
+        },
+        paymentTerms: {
+            type: String,
+            enum: ['pay-now', 'pay-later'],
+            required: true,
+        },
+        status: {
+            type: String,
+            enum: [
+                'pending',
+                'inprogress',
+                'completed',
+                'canceled',
+                'delivered',
+                'review',
+                'finished',
+            ],
+            default: 'pending',
+        },
+        estimatedTotal: { type: String, required: true },
+        paymentStatus: { type: String, default: 'pending' },
     },
-    pricePerImage: { type: Number, required: true },
-    metadata: { type: String },
-    flatness: { type: String },
-    outputFormat: { type: String, required: true },
-    backgroundOption: { type: String, required: true },
-    description: { type: String },
-    addOns: { type: [addOnSchema] },
-    deliveryTime: {
-        type: String,
-        enum: ['12-hours', '24-hours', '48-hours'],
-        required: true,
+    {
+        timestamps: true,
     },
-    paymentTerms: {
-        type: String,
-        enum: ['pay-now', 'pay-later'],
-        required: true,
-    },
-    status: {
-        type: String,
-        enum: [
-            'pending',
-            'in-progress',
-            'completed',
-            'delivered',
-            'review',
-            'finished',
-        ],
-        default: 'pending',
-    },
-    estimatedTotal: { type: String, required: true },
-});
+);
 
 const orderModel = models?.Order || model('Order', orderSchema);
 export default orderModel;

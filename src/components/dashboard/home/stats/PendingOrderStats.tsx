@@ -3,7 +3,7 @@ import { TrendingUp } from 'lucide-react';
 import Image from 'next/image';
 
 export default function PendingOrderStats({ orders }: { orders: IOrder[] }) {
-    const pending = orders.filter(
+    const pending = orders?.filter(
         (order) => order.status.toLowerCase() === 'pending',
     );
 

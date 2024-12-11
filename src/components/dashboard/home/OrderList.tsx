@@ -5,6 +5,7 @@ import { getOrders } from '@/utils/orders';
 import { getSession } from '@/lib/getSession';
 import { redirect } from 'next/navigation';
 import getLoggedInUserInfo from '@/utils/users';
+import { format } from 'date-fns';
 
 export default async function OrderList() {
     const session = await getSession();
@@ -57,8 +58,8 @@ export default async function OrderList() {
                 </div>
 
                 {/* Table Body */}
-                <div className="w-full bg-white rounded-bl-2xl rounded-br-2xl border border-[#cccccc]">
-                    {orders.map((order: IOrder, index: number) => (
+                <div className="w-full bg-white rounded-b-2xl border border-[#cccccc]">
+                    {orders.slice(0, 10).map((order: IOrder, index: number) => (
                         <div
                             key={index}
                             className={`grid grid-cols-5 px-6 py-4 items-center
@@ -72,21 +73,27 @@ export default async function OrderList() {
                                 {order.title}
                             </div>
                             <div className="text-black">
-                                ${order.estimatedTotalPrice.toLocaleString()}
+                                ${order.estimatedTotal}
                             </div>
                             <div className="text-black">
-                                {new Date(order.createdAt).toLocaleDateString()}
+                                {order.dueDate?.from
+                                    ? format(
+                                          new Date(order.dueDate.from),
+                                          'dd-MM-yyyy',
+                                      )
+                                    : 'No date available'}
                             </div>
                             <div className="text-black">
-                                {order.completedDate
-                                    ? new Date(
-                                          order.completedDate,
-                                      ).toLocaleDateString()
-                                    : '-'}
+                                {order.dueDate?.to
+                                    ? format(
+                                          new Date(order.dueDate.to),
+                                          'dd-MM-yyyy',
+                                      )
+                                    : 'No date available'}
                             </div>
                             <div className="text-center">
                                 <span
-                                    className={`px-3 py-1 rounded-full text-sm
+                                    className={`px-3 py-1 rounded-full text-sm capitalize
                                     ${
                                         order.status === 'completed'
                                             ? 'bg-green-100 text-green-800'

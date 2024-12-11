@@ -58,11 +58,6 @@ export default function CreateOrderForm({ user }: { user: IUser }) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!title || !description) {
-            toast.error('Please fill in all required fields');
-            return;
-        }
-
         const orderData = {
             userId: user?.userId,
             name: user?.name,
@@ -102,6 +97,21 @@ export default function CreateOrderForm({ user }: { user: IUser }) {
                 error: 'Failed to submit order. Please try again.',
             },
         );
+
+        setTitle('');
+        setDownloadLink('');
+        setImageLength('');
+        setDueDate({ from: new Date(), to: addDays(new Date(), 20) });
+        setPricePerImage('');
+        setMetadata('Keep My Metadata intact- What’s This?');
+        setFlatness('0.5');
+        setOutputFormat('png');
+        setBackgroundOption('white');
+        setDescription('');
+        setFiles([]);
+        setAddOns([]);
+        setDeliveryTime('12-hours');
+        setPaymentTerms('pay-now');
     };
 
     return (

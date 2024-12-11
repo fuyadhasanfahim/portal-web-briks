@@ -1,30 +1,26 @@
 import { ArrowUpDown, ChevronDown } from 'lucide-react';
-import toast from 'react-hot-toast';
 import { IOrder } from '@/types/Order';
 import DateRangePicker from '../shared/DateRangePicker';
+import { getOrders } from '@/utils/orders';
+import { getSession } from '@/lib/getSession';
+import { redirect } from 'next/navigation';
+import getLoggedInUserInfo from '@/utils/users';
+import { format } from 'date-fns';
 
 export default async function SortOrderList() {
-    const response = await fetch(
-        'http://localhost:3000/api/orders/get-all-orders',
-        {
-            method: 'GET',
-            credentials: 'include',
-        },
-    );
+    const session = await getSession();
+    const userId = session?.user?.userId;
 
-    if (!response.ok) {
-        toast.error('Failed to fetch orders');
-        return;
-    }
+    if (!userId) redirect('/signin');
 
-    const { success, data, message } = await response.json();
+    const user = await getLoggedInUserInfo(userId);
 
-    if (!success) {
-        toast.error(message);
-        return;
-    }
+    const data = {
+        userId,
+        role: user?.role,
+    };
 
-    const orders = data;
+    const orders = await getOrders(data);
 
     return (
         <div className="space-y-10">
@@ -92,17 +88,23 @@ export default async function SortOrderList() {
                                 {order.title}
                             </div>
                             <div className="text-black">
-                                ${order.estimatedTotalPrice.toLocaleString()}
+                                ${order.estimatedTotal.toLocaleString()}
                             </div>
                             <div className="text-black">
-                                {new Date(order.createdAt).toLocaleDateString()}
+                                {order.dueDate?.from
+                                    ? format(
+                                          new Date(order.dueDate.from),
+                                          'dd-MM-yyyy',
+                                      )
+                                    : 'No date available'}
                             </div>
                             <div className="text-black">
-                                {order.completedDate
-                                    ? new Date(
-                                          order.completedDate,
-                                      ).toLocaleDateString()
-                                    : '-'}
+                                {order.dueDate?.to
+                                    ? format(
+                                          new Date(order.dueDate.to),
+                                          'dd-MM-yyyy',
+                                      )
+                                    : 'No date available'}
                             </div>
                             <div className="text-center">
                                 <span

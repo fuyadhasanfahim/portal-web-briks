@@ -4,7 +4,6 @@ import OrderCompletedStats from '@/components/dashboard/home/stats/OrderComplete
 import PendingOrderStats from '@/components/dashboard/home/stats/PendingOrderStats';
 import OrderManagementHeroSection from '@/components/order-management/OrderManagementHeroSection';
 import SortOrderList from '@/components/order-management/SortOrderList';
-import toast from 'react-hot-toast';
 
 export default async function page() {
     const response = await fetch(
@@ -16,15 +15,13 @@ export default async function page() {
     );
 
     if (!response.ok) {
-        toast.error('Failed to fetch orders');
-        return;
+        console.log('Failed to fetch orders');
     }
 
     const { success, data, message } = await response.json();
 
     if (!success) {
-        toast.error(message);
-        return;
+        console.log(message);
     }
 
     const orders = data;

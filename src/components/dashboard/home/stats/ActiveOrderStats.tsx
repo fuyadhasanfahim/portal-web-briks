@@ -3,7 +3,7 @@ import { TrendingUp } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ActiveOrderStats({ orders }: { orders: IOrder[] }) {
-    const inprogress = orders.filter(
+    const inprogress = orders?.filter(
         (order) => order.status.toLowerCase() === 'in-progress',
     );
 

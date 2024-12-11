@@ -9,6 +9,7 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from '@/components/ui/chart';
+import { IOrder } from '@/types/Order';
 
 const chartData = [
     { month: 'Jan', expense: 2500 },
@@ -31,7 +32,9 @@ const chartConfig = {
     },
 } satisfies ChartConfig;
 
-export default function OrderStatisticsChart() {
+export default function OrderStatisticsChart({ orders }: { orders: IOrder[] }) {
+    console.log(orders);
+
     return (
         <ChartContainer config={chartConfig} className="w-full h-[266px]">
             <BarChart data={chartData} width={500} height={600}>
