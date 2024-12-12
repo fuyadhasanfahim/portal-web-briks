@@ -51,41 +51,43 @@ export default async function OrderList() {
 
                 {/* Table Body */}
                 <div className="w-full bg-white rounded-b-2xl border border-[#cccccc]">
-                    {orders.slice(0, 10).map((order: IOrder, index: number) => (
-                        <div
-                            key={index}
-                            className={`grid grid-cols-5 px-6 py-4 items-center
+                    {orders
+                        ?.slice(0, 10)
+                        .map((order: IOrder, index: number) => (
+                            <div
+                                key={index}
+                                className={`grid grid-cols-5 px-6 py-4 items-center
                                 ${
                                     index !== orders.length - 1
                                         ? 'border-b border-[#cccccc]'
                                         : ''
                                 }`}
-                        >
-                            <div className="text-black font-medium">
-                                {order.title}
-                            </div>
-                            <div className="text-black">
-                                ${order.estimatedTotal}
-                            </div>
-                            <div className="text-black">
-                                {order.dueDate?.from
-                                    ? format(
-                                          new Date(order.dueDate.from),
-                                          'dd-MM-yyyy',
-                                      )
-                                    : 'No date available'}
-                            </div>
-                            <div className="text-black">
-                                {order.dueDate?.to
-                                    ? format(
-                                          new Date(order.dueDate.to),
-                                          'dd-MM-yyyy',
-                                      )
-                                    : 'No date available'}
-                            </div>
-                            <div className="text-center">
-                                <span
-                                    className={`px-3 py-1 rounded-full text-sm capitalize
+                            >
+                                <div className="text-black font-medium">
+                                    {order.title}
+                                </div>
+                                <div className="text-black">
+                                    ${order.estimatedTotal}
+                                </div>
+                                <div className="text-black">
+                                    {order.dueDate?.from
+                                        ? format(
+                                              new Date(order.dueDate.from),
+                                              'dd-MM-yyyy',
+                                          )
+                                        : 'No date available'}
+                                </div>
+                                <div className="text-black">
+                                    {order.dueDate?.to
+                                        ? format(
+                                              new Date(order.dueDate.to),
+                                              'dd-MM-yyyy',
+                                          )
+                                        : 'No date available'}
+                                </div>
+                                <div className="text-center">
+                                    <span
+                                        className={`px-3 py-1 rounded-full text-sm capitalize
                                     ${
                                         order.status === 'completed'
                                             ? 'bg-green-100 text-green-800'
@@ -102,12 +104,12 @@ export default async function OrderList() {
                                             : ''
                                     }
                                 `}
-                                >
-                                    {order.status}
-                                </span>
+                                    >
+                                        {order.status}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
                 </div>
             </div>
         </div>

@@ -46,6 +46,7 @@ const orderSchema = new Schema<IOrder>(
         name: { type: String, ref: 'user', required: true },
         username: { type: String, ref: 'user', required: true },
         email: { type: String, ref: 'user', required: true },
+        profileImage: { type: String, ref: 'user', required: true },
         orderId: { type: String, required: true },
         files: { type: [fileSchema], required: false },
         title: { type: String, required: true },

@@ -6,20 +6,26 @@ import OrderCompletedStats from '@/components/dashboard/home/stats/OrderComplete
 import OrderInProgressStats from '@/components/dashboard/home/stats/OrderInProgressStats';
 import TotalOrdersStats from '@/components/dashboard/home/stats/TotalOrdersStats';
 import TotalSpentStats from '@/components/dashboard/home/stats/TotalSpentStats';
-import { getSession } from '@/lib/getSession';
 import { getOrders } from '@/utils/orders';
-import getLoggedInUserInfo from '@/utils/users';
+import { getLoggedInUserInfo, getUserId } from '@/utils/users';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
 
 export default async function Page() {
-    const session = await getSession();
-    const userId = session?.user?.userId;
-
-    if (!userId) redirect('/signin');
+    const userId = await getUserId();
 
     const user = await getLoggedInUserInfo(userId);
+
+    if (!user) {
+        console.error('Failed to fetch user info');
+        return null;
+    }
+
     const orders = await getOrders();
+
+    if (!orders) {
+        console.error('Failed to fetch orders');
+        return null;
+    }
 
     return (
         <div className="">

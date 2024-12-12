@@ -3,6 +3,7 @@ export interface IOrder {
     name: string;
     username: string;
     email: string;
+    profileImage: string;
     orderId: string;
     files?: IFile[];
     title: string;

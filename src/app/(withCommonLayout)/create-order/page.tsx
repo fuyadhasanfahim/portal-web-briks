@@ -1,6 +1,6 @@
 import CreateOrderForm from '@/components/create-order/CreateOrderForm';
 import { getSession } from '@/lib/getSession';
-import getLoggedInUserInfo from '@/utils/users';
+import {getLoggedInUserInfo} from '@/utils/users';
 import { redirect } from 'next/navigation';
 
 export default async function page() {

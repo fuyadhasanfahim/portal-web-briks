@@ -9,30 +9,53 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const userId = searchParams.get('userId');
         const role = searchParams.get('role');
+        const status = searchParams.get('status');
+        const page = parseInt(searchParams.get('page') || '1', 10);
+        const limit = parseInt(searchParams.get('limit') || '10', 10);
 
         if (!userId || !role) {
             return NextResponse.json(
                 {
                     success: false,
-                    message: 'Missing required parameters: userId and role',
+                    message: 'Missing required parameters: userId and role.',
                 },
                 { status: 400 },
             );
         }
 
-        const validRoles = ['admin', 'developer', 'super-admin'];
-        const query = validRoles.includes(role) ? {} : { userId };
+        const query =
+            role === 'admin' || role === 'developer' || role === 'super-admin'
+                ? status
+                    ? { status }
+                    : {}
+                : status
+                ? { userId, status }
+                : { userId };
+
+        const skip = (page - 1) * limit;
 
         const orders = await orderModel
             .find(query)
             .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
             .select('-__v');
+
+        const totalOrders = await orderModel.countDocuments(query);
 
         return NextResponse.json(
             {
                 success: true,
-                message: 'Orders fetched successfully',
-                data: orders,
+                message: 'Orders fetched successfully.',
+                data: {
+                    orders,
+                    pagination: {
+                        total: totalOrders,
+                        page,
+                        limit,
+                        totalPages: Math.ceil(totalOrders / limit),
+                    },
+                },
             },
             { status: 200 },
         );

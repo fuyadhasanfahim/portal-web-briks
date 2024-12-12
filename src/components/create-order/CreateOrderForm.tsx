@@ -63,6 +63,7 @@ export default function CreateOrderForm({ user }: { user: IUser }) {
             name: user?.name,
             username: user?.username,
             email: user?.email,
+            profileImage: user?.profileImage,
             title,
             dueDate,
             pricePerImage,
