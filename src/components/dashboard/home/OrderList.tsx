@@ -4,7 +4,6 @@ import { IOrder } from '@/types/Order';
 import { getOrders } from '@/utils/orders';
 import { getSession } from '@/lib/getSession';
 import { redirect } from 'next/navigation';
-import getLoggedInUserInfo from '@/utils/users';
 import { format } from 'date-fns';
 
 export default async function OrderList() {
@@ -13,14 +12,7 @@ export default async function OrderList() {
 
     if (!userId) redirect('/signin');
 
-    const user = await getLoggedInUserInfo(userId);
-
-    const data = {
-        userId,
-        role: user?.role,
-    };
-
-    const orders = await getOrders(data);
+    const orders = await getOrders();
 
     return (
         <div className="space-y-10">

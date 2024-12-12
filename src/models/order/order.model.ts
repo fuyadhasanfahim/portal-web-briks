@@ -62,7 +62,14 @@ const orderSchema = new Schema<IOrder>(
         addOns: { type: [addOnSchema] },
         deliveryTime: {
             type: String,
-            enum: ['12-hours', '24-hours', '48-hours'],
+            enum: [
+                '12-hours',
+                '24-hours',
+                '36-hours',
+                '48-hours',
+                '72-hours',
+                'flexible',
+            ],
             required: true,
         },
         paymentTerms: {

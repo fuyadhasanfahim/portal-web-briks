@@ -19,13 +19,7 @@ export default async function Page() {
     if (!userId) redirect('/signin');
 
     const user = await getLoggedInUserInfo(userId);
-
-    const data = {
-        userId,
-        role: user?.role,
-    };
-
-    const orders = await getOrders(data);
+    const orders = await getOrders();
 
     return (
         <div className="">
