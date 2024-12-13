@@ -42,7 +42,7 @@ export default async function page() {
             </div>
 
             <div className="py-10">
-                <SortOrderList />
+                <SortOrderList initialOrders={orders} />
             </div>
         </div>
     );

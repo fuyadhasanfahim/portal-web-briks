@@ -66,7 +66,7 @@ export default async function Page() {
                 </div>
             </div>
 
-            <OrderList />
+            <OrderList orders={orders} />
         </div>
     );
 }

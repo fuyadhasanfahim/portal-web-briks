@@ -1,24 +1,16 @@
 'use client';
 
 import { IOrder } from '@/types/Order';
-import FilteredSection from './FilteredSection';
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { FileText } from 'lucide-react';
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from '@/components/ui/pagination';
+import FilteredSection from './FilteredSection';
 import IUser from '@/types/user-interface';
 
-export default function PendingOrdersMain({
+export default function CompletedOrdersMain({
     filteredOrders,
     totalPrice,
     user,
@@ -32,8 +24,6 @@ export default function PendingOrdersMain({
         from: undefined,
         to: undefined,
     });
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [ordersPerPage] = useState<number>(10);
 
     const filterOrders = (orders: IOrder[]) => {
         const now = new Date();
@@ -89,17 +79,6 @@ export default function PendingOrdersMain({
 
     const filteredOrdersList = filterOrders(filteredOrders.orders);
 
-    // Calculate the total number of pages
-    const totalPages = Math.ceil(filteredOrdersList?.length / ordersPerPage);
-
-    // Get current orders
-    const indexOfLastOrder = currentPage * ordersPerPage;
-    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-    const currentOrders = filteredOrdersList?.slice(
-        indexOfFirstOrder,
-        indexOfLastOrder,
-    );
-
     const blocked = user?.role !== 'user';
 
     return (
@@ -107,7 +86,7 @@ export default function PendingOrdersMain({
             <div className="flex flex-wrap items-center justify-between gap-10 pt-6 pb-10">
                 <div className="flex items-center gap-2">
                     <h3 className="text-black text-xl font-medium">
-                        Pending Order
+                        Complete Order
                     </h3>
                     <p className="text-black text-base font-medium">
                         {filteredOrders?.pagination?.total}-(${totalPrice})
@@ -123,7 +102,7 @@ export default function PendingOrdersMain({
             </div>
 
             <div className="flex flex-col items-center gap-5">
-                {currentOrders?.map((order, index) => {
+                {filteredOrdersList?.map((order, index) => {
                     const {
                         name,
                         estimatedTotal,
@@ -131,6 +110,8 @@ export default function PendingOrdersMain({
                         status,
                         profileImage,
                     } = order;
+
+                    console.log(profileImage);
 
                     return (
                         <div
@@ -228,40 +209,6 @@ export default function PendingOrdersMain({
                     );
                 })}
             </div>
-
-            <Pagination className="mt-6">
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious
-                            href="#"
-                            onClick={() =>
-                                setCurrentPage((prev) => Math.max(prev - 1, 1))
-                            }
-                        />
-                    </PaginationItem>
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <PaginationItem key={index}>
-                            <PaginationLink
-                                href="#"
-                                onClick={() => setCurrentPage(index + 1)}
-                                isActive={currentPage === index + 1}
-                            >
-                                {index + 1}
-                            </PaginationLink>
-                        </PaginationItem>
-                    ))}
-                    <PaginationItem>
-                        <PaginationNext
-                            href="#"
-                            onClick={() =>
-                                setCurrentPage((prev) =>
-                                    Math.min(prev + 1, totalPages),
-                                )
-                            }
-                        />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
         </>
     );
 }

@@ -112,11 +112,11 @@ export default function PaginatedOrders() {
                                 className={`px-3 py-1 rounded-full text-sm capitalize ${
                                     order.status === 'completed'
                                         ? 'bg-green-100 text-green-800'
-                                        : order.status === 'in-progress'
+                                        : order.status === 'inprogress'
                                         ? 'bg-blue-100 text-blue-800'
                                         : order.status === 'pending'
                                         ? 'bg-yellow-100 text-yellow-800'
-                                        : order.status === 'cancel'
+                                        : order.status === 'canceled'
                                         ? 'bg-red-100 text-red-800'
                                         : ''
                                 }`}

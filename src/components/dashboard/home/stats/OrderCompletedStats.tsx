@@ -7,6 +7,8 @@ export default function OrderCompletedStats({ orders }: { orders: IOrder[] }) {
         (order) => order.status.toLowerCase() === 'completed',
     );
 
+    console.log(orders?.length);
+
     return (
         <div className="w-full min-w-[264px] h-[139px] bg-white rounded-lg border border-neutral-100 shadow-sm">
             <div className="flex flex-col items-start justify-center gap-2 h-full px-6">

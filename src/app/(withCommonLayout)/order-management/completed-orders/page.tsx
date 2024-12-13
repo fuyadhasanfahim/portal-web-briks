@@ -1,13 +1,13 @@
-import PendingOrdersMain from '@/components/order-management/pending-orders/PendingOrdersMain';
 import { IOrder } from '@/types/Order';
 import { getPaginatedOrdersByStatus } from '@/utils/orders';
+import CompletedOrdersMain from '@/components/order-management/completed-orders/CompletedOrdersMain';
 import { getLoggedInUserInfo, getUserId } from '@/utils/users';
 
 export default async function page() {
     const filteredOrders = await getPaginatedOrdersByStatus({
         limit: 10,
         page: 1,
-        status: 'pending',
+        status: 'completed',
     });
 
     const totalPrice = filteredOrders?.orders?.reduce(
@@ -21,7 +21,7 @@ export default async function page() {
 
     return (
         <div>
-            <PendingOrdersMain
+            <CompletedOrdersMain
                 filteredOrders={filteredOrders}
                 totalPrice={totalPrice}
                 user={user}

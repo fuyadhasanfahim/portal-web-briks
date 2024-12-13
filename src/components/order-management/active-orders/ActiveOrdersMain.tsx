@@ -1,7 +1,6 @@
 'use client';
 
 import { IOrder } from '@/types/Order';
-import FilteredSection from './FilteredSection';
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { format } from 'date-fns';
@@ -16,9 +15,10 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
+import FilteredSection from './FilteredSection';
 import IUser from '@/types/user-interface';
 
-export default function PendingOrdersMain({
+export default function ActiveOrdersMain({
     filteredOrders,
     totalPrice,
     user,
@@ -107,7 +107,7 @@ export default function PendingOrdersMain({
             <div className="flex flex-wrap items-center justify-between gap-10 pt-6 pb-10">
                 <div className="flex items-center gap-2">
                     <h3 className="text-black text-xl font-medium">
-                        Pending Order
+                        Active Order
                     </h3>
                     <p className="text-black text-base font-medium">
                         {filteredOrders?.pagination?.total}-(${totalPrice})

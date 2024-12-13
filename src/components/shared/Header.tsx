@@ -1,17 +1,14 @@
 import { Bell, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import OnSearchButton from './OnSearchButton';
-import { getSession } from '@/lib/getSession';
-import { redirect } from 'next/navigation';
+import { getLoggedInUserInfo, getUserId } from '@/utils/users';
 
 export default async function Header() {
-    const session = await getSession();
-    const user = session?.user;
-
-    if (!user) redirect('/signin');
+    const userId = await getUserId();
+    const user = await getLoggedInUserInfo(userId);
 
     return (
-        <div className="w-full h-20 bg-white px-6">
+        <div className="w-full h-20 bg-white px-6 sticky top-0 z-50">
             <div className="h-full flex items-center justify-end">
                 <div className="flex items-center gap-6">
                     <div className="flex items-center">
